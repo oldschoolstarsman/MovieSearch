@@ -1,0 +1,47 @@
+.jumbotron {
+    background-color: #fff;
+}
+
+#movies img {
+    width: 300px;
+    height: 400px;
+}
+
+#movie img {
+    max-width: 100%;
+}
+
+.cards {
+    height: 500px;
+}
+
+#loader {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#loader.hidden {
+    animation: fadeOut 1s;
+    animation-fill-mode: forwards;
+}
+
+#loader img{
+    width: 40px;
+    height: 40px;
+    
+}
+
+.list-group-item > strong {
+    font-weight: 800;
+}
+
+
+@keyframes fadeOut {
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
