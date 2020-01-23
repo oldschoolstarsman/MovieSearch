@@ -3,15 +3,15 @@ $(document).ready(() => {
         let searchText = ($('#searchText').val());
         getMovies(searchText);
         e.preventDefault();
-        
+
     })
 })
 
-const baseUrl = 'http://www.omdbapi.com';
+const baseUrl = 'https://www.omdbapi.com';
 const apiKey = '&apikey=b9c643ad';
 
 function getMovies(searchText) {
-    axios.get('http://www.omdbapi.com?s=' + searchText + apiKey)
+    axios.get('https://www.omdbapi.com?s=' + searchText + apiKey)
         .then((response) => {
             console.log(response);
             let movies = response.data.Search;
@@ -27,14 +27,14 @@ function getMovies(searchText) {
                         </div>
                     </div>
                 `;
-                
+
             });
 
             $('#movies').html(output);
         })
         .catch((err) => {
             console.log(err)
-    });
+        });
 }
 
 function movieSelected(id) {
@@ -44,8 +44,8 @@ function movieSelected(id) {
 }
 
 function getMovie() {
-    let movieId =  sessionStorage.getItem('movieId');
-    axios.get('http://www.omdbapi.com?i=' + movieId + apiKey)
+    let movieId = sessionStorage.getItem('movieId');
+    axios.get('https://www.omdbapi.com?i=' + movieId + apiKey)
         .then((response) => {
             let movie = response.data;
             console.log(movie);
@@ -73,7 +73,7 @@ function getMovie() {
                             <h3>Plot</h3>
                             ${movie.Plot}
                             <div class=>
-                                <a href="http://imdb.com/title/${movie.imdbID}" target="_blank" class="btn btn-sm btn-primary">View IMDB</a>
+                                <a href="https://imdb.com/title/${movie.imdbID}" target="_blank" class="btn btn-sm btn-primary">View IMDB</a>
                                 <a href="index.html" class="btn btn-link">Go Back To Search</a>
                             </div>
                         </div>
@@ -81,10 +81,10 @@ function getMovie() {
                 </div>
             `;
             $('#movie').html(output);
-             
+
         })
         .catch((err) => {
             console.log(err)
-    });
+        });
 
 }
