@@ -1,19 +1,23 @@
+const baseUrl = 'https://www.omdbapi.com';
+const apiKey = '&apikey=b9c643ad';
+
 $(document).ready(() => {
-    getMovies('Rambo');
+    getMovies('Mars Attacks');
+    const searchedMovie = localStorage.getItem('searchedMovie');
+    if (searchedMovie) getMovies(searchedMovie);
     $('#searchForm').on('submit', (e) => {
+        e.preventDefault();
         let searchText = ($('#searchText').val());
         getMovies(searchText);
-        e.preventDefault();
 
     })
 })
 
-const baseUrl = 'https://www.omdbapi.com';
-const apiKey = '&apikey=b9c643ad';
 
 function getMovies(searchText) {
-    axios.get('https://www.omdbapi.com?s=' + searchText + apiKey)
+    axios.get(`https://www.omdbapi.com?s=${searchText}${apiKey}`)
         .then((response) => {
+
             let movies = response.data.Search;
             let output = '';
 
@@ -34,6 +38,7 @@ function getMovies(searchText) {
             }
 
             $('#movies').html(output);
+            localStorage.setItem('searchedMovie', searchText)
         })
         .catch((err) => {
             console.log(err)
@@ -42,16 +47,15 @@ function getMovies(searchText) {
 
 function movieSelected(id) {
     sessionStorage.setItem('movieId', id);
-    window.location = 'movie.html';
+    window.location = `movie.html`;
     return false;
 }
 
 function getMovie() {
     let movieId = sessionStorage.getItem('movieId');
-    axios.get('https://www.omdbapi.com?i=' + movieId + apiKey)
+    axios.get(`https://www.omdbapi.com?i=${movieId}${apiKey}`)
         .then((response) => {
             let movie = response.data;
-            console.log(movie);
             let output = `
                 <div class="row">
                     <div class="col-md-4">
