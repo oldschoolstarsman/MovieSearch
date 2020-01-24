@@ -1,4 +1,5 @@
 $(document).ready(() => {
+    getMovies('Rambo');
     $('#searchForm').on('submit', (e) => {
         let searchText = ($('#searchText').val());
         getMovies(searchText);
@@ -13,22 +14,24 @@ const apiKey = '&apikey=b9c643ad';
 function getMovies(searchText) {
     axios.get('https://www.omdbapi.com?s=' + searchText + apiKey)
         .then((response) => {
-            console.log(response);
             let movies = response.data.Search;
             let output = '';
-            $.each(movies, (index, movie) => {
-                console.log(movie.Title)
-                output += `
-                    <div class="col-md-6 col-lg-4 p-3 animated fadeIn">
-                        <div class="text-center cards">
-                            <img src="${movie.Poster}">
-                            <h5 class="mt-2">${movie.Title}</h5>
-                            <a onclick="movieSelected('${movie.imdbID}')" class="btn btn-sm btn-outline-primary" href="#">Movie details</a>
-                        </div>
-                    </div>
-                `;
 
-            });
+            if (movies) {
+                $.each(movies, (index, movie) => {
+                    output += `
+                        <div class="col-md-6 col-lg-4 p-3 animated fadeIn">
+                            <div class="text-center cards">
+                                <img src="${movie.Poster}">
+                                <h5 class="mt-2">${movie.Title}</h5>
+                                <a onclick="movieSelected('${movie.imdbID}')" class="btn btn-sm btn-outline-primary" href="#">Movie details</a>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                output += '<div class="container animated fadeIn text-center">No movie found</div>'
+            }
 
             $('#movies').html(output);
         })
@@ -55,7 +58,7 @@ function getMovie() {
                         <img src="${movie.Poster}" class="thumbnail">
                     </div>
                     <div class="col-md-8">
-                        <h2>${movie.Title}</h2>
+                        <h2 class="ml-3">${movie.Title}</h2>
                         <ul class="list-group list-group-flush text-primary">
                             <li class="list-group-item border-0"><strong>Genre:</strong> ${movie.Genre}</li>
                             <li class="list-group-item border-0"><strong>Released:</strong> ${movie.Released}</li>
@@ -72,9 +75,13 @@ function getMovie() {
                         <div class="cards">
                             <h3>Plot</h3>
                             ${movie.Plot}
-                            <div class=>
-                                <a href="https://imdb.com/title/${movie.imdbID}" target="_blank" class="btn btn-sm btn-primary">View IMDB</a>
-                                <a href="index.html" class="btn btn-link">Go Back To Search</a>
+                            <div class="mt-1">
+                                <a href="https://imdb.com/title/${movie.imdbID}" target="_blank" class="text-white">
+                                    <button class="btn btn-sm btn-primary">View IMDB</button>
+                                </a>
+                                <a href="index.html">
+                                    <button class="btn btn-sm btn-light">Go Back To Search</button>
+                                </a>
                             </div>
                         </div>
                     </div>
