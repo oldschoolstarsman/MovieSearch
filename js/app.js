@@ -2,7 +2,7 @@ const baseUrl = 'https://www.omdbapi.com';
 const apiKey = '&apikey=b9c643ad';
 
 $(document).ready(() => {
-    getMovies('Mars Attacks');
+    getMovies('Mars');
     const searchedMovie = localStorage.getItem('searchedMovie');
     if (searchedMovie) getMovies(searchedMovie);
     $('#searchForm').on('submit', (e) => {
